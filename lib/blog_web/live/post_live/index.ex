@@ -11,11 +11,7 @@ defmodule BlogWeb.PostLive.Index do
     user = Accounts.get_user_by_session_token(session["user_token"])
     IO.inspect(user)
 
-    # # {:ok, socket|>stream(socket, :posts, Posts.list_posts())
-    # # |>assign(:user, user)}
-
-    #     {:ok, stream(socket, :posts, Posts.list_posts())
-    #   }
+  
     {:ok,
      socket
      |> stream(:posts, Posts.list_posts())
