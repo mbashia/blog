@@ -68,8 +68,17 @@ defmodule BlogWeb.Router do
     live "/posts/new", PostLive.Index, :new
     live "/posts/:id/edit", PostLive.Index, :edit
 
+    live "/posts/:id/new/comment", PostLive.Show, :add_comment
+
     live "/posts/:id", PostLive.Show, :show
     live "/posts/:id/show/edit", PostLive.Show, :edit
+
+    live "/comment", CommentLive.Index, :index
+    live "/comment/new", CommentLive.Index, :new
+    live "/comment/:id/edit", CommentLive.Index, :edit
+
+    live "/comment/:id", CommentLive.Show, :show
+    live "/comment/:id/show/edit", CommentLive.Show, :edit
 
     live_session :require_authenticated_user,
       on_mount: [{BlogWeb.UserAuth, :ensure_authenticated}] do

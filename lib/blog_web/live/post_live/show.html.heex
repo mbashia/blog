@@ -12,7 +12,26 @@
   <:item title="Title"><%= @post.title %></:item>
   <:item title="Body"><%= @post.body %></:item>
 </.list>
+<table>
+  <thead>
+    <tr>
+      <th>Comment</th>
 
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="vehicles">
+    <%= for comment <- @comments do %>
+      <tr id={"comment-#{comment.id}"}>
+        <td><%= comment.text %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<.link patch={~p"/posts/#{@post.id}/new/comment"}>
+  <.button>Add Comment</.button>
+</.link>
 <.back navigate={~p"/posts"}>Back to posts</.back>
 
 <.modal :if={@live_action == :edit} id="post-modal" show on_cancel={JS.patch(~p"/posts/#{@post}")}>
@@ -22,6 +41,24 @@
     title={@page_title}
     action={@live_action}
     post={@post}
+    patch={~p"/posts/#{@post}"}
+  />
+</.modal>
+
+<.modal
+  :if={@live_action == :add_comment}
+  id="comment-modal"
+  show
+  on_cancel={JS.patch(~p"/posts/#{@post}")}
+>
+  <.live_component
+    module={BlogWeb.CommentLive.FormComponent}
+    id={@post.id}
+    title={@page_title}
+    comment={@comment}
+    action={@live_action}
+    post={@post}
+    user={@user}
     patch={~p"/posts/#{@post}"}
   />
 </.modal>

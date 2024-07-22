@@ -3,6 +3,7 @@ defmodule Blog.Accounts.User do
   import Ecto.Changeset
 
   alias Blog.Posts.Post
+  alias Blog.Comments.Comment
 
   schema "users" do
     field :email, :string
@@ -11,6 +12,7 @@ defmodule Blog.Accounts.User do
     field :current_password, :string, virtual: true, redact: true
     field :confirmed_at, :naive_datetime
     has_many :posts, Post
+    has_many :comments, Comment
 
     timestamps()
   end

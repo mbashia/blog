@@ -1,0 +1,46 @@
+<.header>
+  Listing Comment
+  <:actions>
+    <.link patch={~p"/comment/new"}>
+      <.button>New Comment</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="comment"
+  rows={@streams.comment_collection}
+  row_click={fn {_id, comment} -> JS.navigate(~p"/comment/#{comment}") end}
+>
+  <:col :let={{_id, comment}} label="Text"><%= comment.text %></:col>
+  <:action :let={{_id, comment}}>
+    <div class="sr-only">
+      <.link navigate={~p"/comment/#{comment}"}>Show</.link>
+    </div>
+    <.link patch={~p"/comment/#{comment}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, comment}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: comment.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="comment-modal"
+  show
+  on_cancel={JS.patch(~p"/comment")}
+>
+  <.live_component
+    module={BlogWeb.CommentLive.FormComponent}
+    id={@comment.id || :new}
+    title={@page_title}
+    action={@live_action}
+    comment={@comment}
+    patch={~p"/comment"}
+  />
+</.modal>

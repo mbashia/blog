@@ -3,11 +3,13 @@ defmodule Blog.Posts.Post do
   import Ecto.Changeset
 
   alias Blog.Accounts.User
+  alias Blog.Comments.Comment
 
   schema "posts" do
     field :body, :string
     field :title, :string
     belongs_to :user, User, foreign_key: :user_id
+    has_many :comments, Comment
     timestamps()
   end
 
