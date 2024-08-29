@@ -4,6 +4,7 @@ defmodule Blog.Accounts.User do
 
   alias Blog.Posts.Post
   alias Blog.Comments.Comment
+  alias Blog.Likes.Like
 
   schema "users" do
     field :email, :string
@@ -13,6 +14,7 @@ defmodule Blog.Accounts.User do
     field :confirmed_at, :naive_datetime
     has_many :posts, Post
     has_many :comments, Comment
+    has_many :likes, Like
 
     timestamps()
   end

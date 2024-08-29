@@ -12,6 +12,28 @@
   <:item title="Title"><%= @post.title %></:item>
   <:item title="Body"><%= @post.body %></:item>
 </.list>
+
+<div class="w-[40%] border border-red-500 flex gap-2 justify-center items-center p-4">
+  <div><%= @post_likes %></div>
+  <%= if @show_like ==false do %>
+    <div
+      class="group transition ease-in-out duration-300 hover:bg-pink-50 hover:border-red-200 w-8 h-8  flex justify-center items-center  p-1 rounded-full hover:cursor-pointer"
+      phx-click="like"
+      phx-value-post_id={@post.id}
+    >
+      <i class=" transition ease-in-out duration-300 group-hover:text-red-500 far fa-heart"></i>
+    </div>
+  <% else %>
+    <div
+      class="group transition ease-in-out duration-300 hover:bg-pink-50 hover:border-red-200 w-8 h-8  flex justify-center items-center  p-1 rounded-full hover:cursor-pointer"
+      phx-click="like"
+      phx-value-post_id={@post.id}
+    >
+      <i class=" transition ease-in-out duration-300 text-red-400 group-hover:text-red-500 fa fa-heart">
+      </i>
+    </div>
+  <% end %>
+</div>
 <table>
   <thead>
     <tr>
@@ -20,7 +42,7 @@
       <th></th>
     </tr>
   </thead>
-  <tbody id="vehicles">
+  <tbody id="comments">
     <%= for comment <- @comments do %>
       <tr id={"comment-#{comment.id}"}>
         <td><%= comment.text %></td>
