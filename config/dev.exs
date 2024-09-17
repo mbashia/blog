@@ -3,7 +3,7 @@ import Config
 # Configure your database
 config :blog, Blog.Repo,
   username: "root",
-  password: "",
+  password: System.get_env("MYSQL_PASS"),
   hostname: "localhost",
   database: "blog_dev",
   stacktrace: true,
